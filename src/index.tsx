@@ -1,14 +1,28 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-
+import ReactDOM from "react-dom";
+import reportWebVitals from "./reportWebVitals";
+import { BrowserRouter} from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "bootswatch/dist/flatly/bootstrap.css";
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import "react-toastify/dist/ReactToastify.css";
+import PrivateRouter from "./Router/PrivateRouter";
+import PublicRouter from "./Router/PublicRouter";
+import {ContextSidebarProvider}from "./context/ContextSidebar";
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+  <>
+    <BrowserRouter>
+      {!window.localStorage.getItem("loggedGreenUser") ? (
+        <PublicRouter/>
+      ) : (
+        <ContextSidebarProvider>
+          <PrivateRouter/>
+        </ContextSidebarProvider>
+        
+      )}
+      <ToastContainer />
+    </BrowserRouter>
+  </>,
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function
