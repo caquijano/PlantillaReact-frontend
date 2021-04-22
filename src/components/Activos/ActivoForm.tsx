@@ -2,7 +2,6 @@ import React, { ChangeEvent, FormEvent, useState } from "react";
 import { Activo } from "./Activo";
 import * as activoService from "./activoService"
 import { toast } from "react-toastify";
-import { useHistory} from "react-router-dom";
 
 export const ActivoForm = () => {
   const initialState = {
