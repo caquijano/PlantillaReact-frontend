@@ -4,10 +4,8 @@ import * as activoService from "./activoService";
 import { BsTrash, BsPlusCircle } from 'react-icons/bs';
 import { FiEdit, FiPlus } from 'react-icons/fi';
 import { toast } from "react-toastify";
-import { useHistory } from "react-router-dom";
 
 const ActivoList = () => {
-  const history = useHistory();
   const token = localStorage.getItem('loggedGreenUser')
   const [activos, setActivos] = useState<Activo[]>([]);
 const [load, setLoad] = useState(true)
@@ -61,7 +59,7 @@ const [search, setSearch] = useState("")
       <div className="form-group col-lg-2"></div>
       <br/>
       <div className="form-group col-lg-3">
-        <button type="button" onClick={()=>history.push("/activosform")} className="btn btn-primary" >Nuevo Producto <FiPlus/> </button>
+        <button type="button" onClick={()=>window.location.href="/activosform"} className="btn btn-primary" >Nuevo Producto <FiPlus/> </button>
       </div>
       <br/>
         <div className="card border-primary mb-3" style={{ width: 1000 }}>
@@ -87,7 +85,7 @@ const [search, setSearch] = useState("")
                         <td>
                           <button className="btn btn-warning btn-sm" style={{marginRight: 5}}> <FiEdit style={{color: "#fff"}}/></button> 
                         <button onClick={()=>activo._id && handleDelete(activo._id)} style={{marginRight: 5}} className="btn btn-danger btn-sm"> <BsTrash/></button>
-                        <button onClick={()=>history.push(`/new-entry/${activo._id}`)} style={{marginRight: 5}} className="btn btn-info btn-sm"> <BsPlusCircle/></button>
+                        <button onClick={()=>window.location.href=`/new-entry/${activo._id}`} style={{marginRight: 5}} className="btn btn-info btn-sm"> <BsPlusCircle/></button>
                           </td>
                       </tr>
                     </tbody>

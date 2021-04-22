@@ -4,11 +4,9 @@ import {User} from "../Auth/User"
 import { toast } from "react-toastify";
 import { FiEdit} from "react-icons/fi";
 import { BsEyeFill,  BsTrash } from "react-icons/bs";
-import { useHistory } from "react-router-dom";
 import * as rolService from "../Role/rolService";
 
 function UserList() {
-  const history = useHistory();
     const token = localStorage.getItem('loggedGreenUser')
   const [users, setUsers] = useState<User[]>([]);
   const [load, setLoad] = useState(true);
@@ -97,8 +95,7 @@ function UserList() {
                            
                             style={{ marginRight: 5 }}
                             className="btn btn-info btn-sm"
-                            onClick={() =>
-                              history.push(`/userview/${user._id}`)
+                            onClick={() => window.location.href=`/userview/${user._id}`
                             }
                           >
                             {" "}
