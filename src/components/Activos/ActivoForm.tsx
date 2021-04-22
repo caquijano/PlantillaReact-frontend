@@ -2,15 +2,13 @@ import React, { ChangeEvent, FormEvent, useState } from "react";
 import { Activo } from "./Activo";
 import * as activoService from "./activoService"
 import { toast } from "react-toastify";
-import { useHistory, } from "react-router-dom";
+import { useHistory} from "react-router-dom";
 
 export const ActivoForm = () => {
   const initialState = {
     name: "",
     description: "",
   };
-  
-  const history = useHistory();
   const token = localStorage.getItem('loggedGreenUser')
 
   const [activo, setActivo] = useState<Activo>(initialState);
@@ -25,7 +23,7 @@ export const ActivoForm = () => {
     e.preventDefault();
     await activoService.createActivo(activo, `${token}`);
     toast.success('Articulo agregado satisfactoriamente')
-    history.push('/activos')
+    window.location.href="activos"
   }
 
   return (
