@@ -1,7 +1,8 @@
 import axios from "axios";
 import { User } from "./User";
+import config from '../../config'
 
-const API = 'http://localhost:4000'
+const API = config.API_HOST
 
 export const createUser = async (user:User) => {
     return await axios.post(`${API}/users`, user)

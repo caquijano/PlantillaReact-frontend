@@ -1,7 +1,8 @@
 import axios from "axios";
 import { Activo } from "./Activo";
+import config from '../../config'
 
-const API = 'http://localhost:4000'
+const API = config.API_HOST
 
 export const createActivo = async (activo:Activo, token:string) => {
 
