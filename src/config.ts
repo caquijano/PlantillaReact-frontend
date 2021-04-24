@@ -1,3 +1,3 @@
 export default{
-    API_HOST: 'https://damp-dusk-50080.herokuapp.com',
+    API_HOST: 'https://api-plantilla1.herokuapp.com',
 }
