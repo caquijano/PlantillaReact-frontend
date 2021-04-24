@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Login from './Login';
 import Register from './Register';
+import Logo from '../../images/176244152_139134654884833_6416900934015126848_n.jpg'
 
 function Principal() {
           
@@ -18,7 +19,7 @@ function Principal() {
                   }}
                 >
                   <img
-                    src="https://scontent-bog1-1.xx.fbcdn.net/v/t1.0-9/116167552_2595113950749904_7127006449389419011_n.jpg?_nc_cat=107&ccb=1-3&_nc_sid=973b4a&_nc_ohc=xVrLIgIkoFkAX_jse3L&_nc_ht=scontent-bog1-1.xx&oh=2698613cfc0c74a1b33fe45f3c6604fc&oe=6083275F"
+                    src={Logo}
                     style={{
                       backgroundSize: "cover",
                       height: "100%",
