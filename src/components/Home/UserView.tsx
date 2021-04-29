@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { User } from "./User";
-import * as userService from "./userService";
+import { User } from "../Auth/User";
+import * as userService from "../Auth/userService";
 import * as rolService from "../Role/rolService";
 function UserView() {
   interface Params {

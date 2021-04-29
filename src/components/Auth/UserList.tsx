@@ -12,13 +12,14 @@ function UserList() {
   const [load, setLoad] = useState(true);
   const [rol, setRol] = useState<any>([])
   const [search, setSearch] = useState("");
-  const loadUsers = async () => {
-    const res = await userService.getUsers();
-    setUsers(res.data);
-  };
+  
   const loadRol = async () => {
     const res:any = await rolService.getRoles();
     setRol(res.data)
+  };
+  const loadUsers = async () => {
+    const res = await userService.getUsers();
+    setUsers(res.data);
   };
   const handleDelete = async (id: string) => {
     if (window.confirm("¿Realmente desea eliminar este articulo?")) {
@@ -33,8 +34,8 @@ function UserList() {
   };
   
   useEffect(() => {
-    loadUsers();
     loadRol();
+    loadUsers();
   }, [load]);
 
   return (

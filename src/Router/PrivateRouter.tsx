@@ -6,7 +6,7 @@ import UserList from "../components/Auth/UserList";
 import SideBar from "../components/Navigation/SideBar";
 import Navbar from "../components/Navigation/Navbar";
 import verifyToken from "../utils/verifyToken"
-import UserView from "../components/Auth/UserView";
+import UserView from "../components/Home/UserView";
 import Footer from "../components/Navigation/Footer";
 import ContextSidebar from "../context/ContextSidebar";
 import React, { useContext } from "react";

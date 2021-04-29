@@ -1,8 +1,15 @@
-import React, { useState, FormEvent, ChangeEvent, useEffect } from "react";
+import React, {
+  useState,
+  FormEvent,
+  ChangeEvent,
+  useEffect,
+  useRef,
+} from "react";
 import { User } from "./User";
 import { toast } from "react-toastify";
 import * as userService from "./userService";
-import { Modal, Button } from "react-bootstrap";
+import * as photoService from "./photoService";
+import { Modal, Button, FormControl } from "react-bootstrap";
 
 function Register(props: any) {
   const { setLg } = props;
@@ -16,16 +23,20 @@ function Register(props: any) {
     address: "",
     city: "",
     phone: "",
+    photo: "",
   };
   const [validate, setValidate] = useState(true);
   const [user, setUser] = useState<User>(initialState);
   const [btn, setBtn] = useState(false);
   const [codigo, setCodigo] = useState({
     codeVerify: 0,
-  })
+  });
   const [show, setShow] = useState(false);
-  const [random, setRandom] = useState(0)
+  const [random, setRandom] = useState(0);
+
   let random2: number;
+  let photography: any = "";
+  const inputRef = useRef<any>();
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -35,12 +46,21 @@ function Register(props: any) {
   const handlerInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
+
     setUser({ ...user, [e.target.name]: e.target.value });
   };
   const handlerInputChange2 = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     setCodigo({ ...codigo, [e.target.name]: e.target.value });
+  };
+  const handlerPhoto = async (event: any) => {
+    const uriPhoto = event.target.files[0];
+    
+    //console.log(inputRef.current.files[0]);
+    console.log(uriPhoto);
+    setUser({ ...user, photo: event.target.files[0] });
+    //await photoService.createPhoto(uriPhoto) 
   };
   const handlSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -61,26 +81,25 @@ function Register(props: any) {
     }
   };
   const saveUser = async () => {
-    let code:number = codigo.codeVerify
-      if ( `${code}` === `${random}`) {
-        const sessionData = await userService.createUser(user);
-        if (sessionData.status === 200) {
-          const token: any = sessionData.data;
-          window.localStorage.setItem("loggedGreenUser", JSON.stringify(token));
-          window.location.href="/activosform"
-          toast.success("Bienvenido");
-        } else {
-          return toast.error(
-            "Ocurrio un problema mientras se realizaba la petición"
-          );
-        }
+    let code: number = codigo.codeVerify;
+    if (`${code}` === `${random}`) {
+      const sessionData = await userService.createUser(user);
+      if (sessionData.status === 200) {
+        const token: any = sessionData.data;
+        window.localStorage.setItem("loggedGreenUser", JSON.stringify(token));
+        window.location.href = "/activosform";
+        toast.success("Bienvenido");
       } else {
         return toast.error(
-          "Codigo incorrecto, realice de nuevo el proceso"
+          "Ocurrio un problema mientras se realizaba la petición"
         );
       }
-      toast.success("Usuario creado satisfactoriamente");
+    } else {
+      return toast.error("Codigo incorrecto, realice de nuevo el proceso");
+    }
+    toast.success("Usuario creado satisfactoriamente");
   };
+  //console.log(inputRef);
   const passEqual = async () => {
     if (user.password === user.repeatPassword) {
       setValidate(true);
@@ -91,11 +110,15 @@ function Register(props: any) {
     }
   };
   useEffect(() => {
+    photography = user.photo;
+    //console.log(photography);
+  }, [user.photo]);
+  useEffect(() => {
     passEqual();
   }, [user.password]);
   return (
     <div
-      className=" card form-group col-lg-5"
+      className=" card form-group col-lg-12"
       style={{ paddingTop: "2%", paddingBottom: "2%" }}
     >
       <div className=" card form-group col-lg-12">
@@ -161,6 +184,31 @@ function Register(props: any) {
                 className="form-control"
                 onChange={handlerInputChange}
               />
+            </div>
+          </div>
+          <div className="form-group row">
+            <div className="col-lg-12">
+              <label>Foto de perfil</label>
+              <div className="form-control">
+                <p>{photography}</p>
+                <input
+                  name="photo"
+                  type="file"
+                  className="form-control"
+                  style={{ opacity: 1, zIndex: 1 }}
+                  onChange={handlerPhoto}
+                />
+              </div>
+              <input type="text" placeholder={user.photo} />
+            </div>
+          </div>
+          <div className="form-group row">
+            <div className="col-lg-12">
+              <label>Foto de perfil</label>
+              <div className="form-control">
+                <FormControl name="photo" ref={inputRef} type="file" onChange={handlerPhoto} />
+              </div>
+              <input type="text" placeholder={user.photo} />
             </div>
           </div>
           <div className="form-group row">
@@ -240,7 +288,12 @@ function Register(props: any) {
           <Modal.Body>
             Por favor digita el correo electronico que digitaste para validar
             que es tu email.
-            <input placeholder="Codigo de verificación " type="number" name="codeVerify" onChange={handlerInputChange2} />
+            <input
+              placeholder="Codigo de verificación "
+              type="number"
+              name="codeVerify"
+              onChange={handlerInputChange2}
+            />
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>
